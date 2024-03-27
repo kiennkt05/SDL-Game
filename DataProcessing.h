@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "F1GP_Variables.h"
+#include "Variables.h"
 
 using namespace std;
 
@@ -80,8 +80,14 @@ bool F1GP_Load_History(){
         file >> F1GP_player_car.pos_x >> F1GP_player_car.pos_y;
         
         for ( auto &opposite_car : F1GP_opposite_car ){
+            file >> opposite_car.dx >> opposite_car.dy >> opposite_car.speed
+                 >> opposite_car.dx_from_road;
+
+            int img;
+            file >> img; opposite_car.image = static_cast<TEXTURE>(img);
+
             file >> opposite_car.pos_x >> opposite_car.pos_y >> opposite_car.road_id 
-                 >> opposite_car.is_empty >> opposite_car.is_empty >> opposite_car.is_special_box;
+                 >> opposite_car.is_empty >> opposite_car.is_add_score >> opposite_car.is_special_box;
         }
 
         file >> F1GP_last_car_road >> F1GP_player_is_car_fly >> F1GP_player_is_car_transform
@@ -107,8 +113,10 @@ bool F1GP_Update_History(){
         outfile << F1GP_player_car.pos_x << " "  << F1GP_player_car.pos_y << endl;
         
         for ( const auto &opposite_car : F1GP_opposite_car ){
-            outfile << opposite_car.pos_x << " " << opposite_car.pos_y << " " << opposite_car.road_id 
-                    << " " << opposite_car.is_empty << " " << opposite_car.is_empty 
+            outfile << opposite_car.dx << " " << opposite_car.dy << " " << opposite_car.speed
+                    << " " << opposite_car.dx_from_road << " " << static_cast<int>(opposite_car.image)
+                    << " " << opposite_car.pos_x << " " << opposite_car.pos_y << " " << opposite_car.road_id 
+                    << " " << opposite_car.is_empty << " " << opposite_car.is_add_score 
                     << " " << opposite_car.is_special_box << endl;
         }
 

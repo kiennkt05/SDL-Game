@@ -6,8 +6,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <bits/stdc++.h>
-#include "F1GP_NewType.h"
-#include "F1GP_Variables.h"
-#include "macros.h"
+#include "NewType.h"
+#include "Variables.h"
+#include "Macros.h"
 
 #endif 
