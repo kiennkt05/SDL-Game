@@ -75,7 +75,7 @@ bool F1GP_Load_History(){
 
     int n;  file >> n;
     if ( n == 0 ) 
-        return true;
+        return false;
     else {
         file >> F1GP_player_car.pos_x >> F1GP_player_car.pos_y;
         

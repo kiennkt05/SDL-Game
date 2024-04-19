@@ -27,10 +27,6 @@ void Texture_Create(const char *filepath, TEXTURE texture_id) {
 }
 
 void Texture_Load() {
-	textures[TEXTURE_SCREEN] =
-		SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH, WINDOW_HEIGHT);
-	// textures[TEXTURE_LEADERBOARD] =
-	// 	SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 400, 400 );
 
 	F1GP_Number_Font = TTF_OpenFont("Fonts/MonomaniacOne-Regular.ttf", 34);
 	SDL_Color num_color =  { 255, 255, 255 };
@@ -42,6 +38,9 @@ void Texture_Load() {
 	}
 	TTF_CloseFont( F1GP_Number_Font );
 	
+	textures[TEXTURE_SCREEN] =
+		SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
 	Texture_Create("assets/F1GP_PLAYER_CAR.png", TEXTURE_PLAYER_CAR);
 	Texture_Create("assets/F1GP_PLAYER_CAR_FLY.png", TEXTURE_PLAYER_CAR_FLY);
 	Texture_Create("assets/F1GP_PLAYER_CAR_FLY_UP.png", TEXTURE_PLAYER_CAR_FLY_UP);
@@ -68,16 +67,16 @@ void Texture_Load() {
 	Texture_Create("assets/F1GP_INFOR.png", TEXTURE_GAME_INFOR );
 	Texture_Create("assets/F1GP_LEADERBOARD.png", TEXTURE_GAME_LEADERBOARD );
 	Texture_Create("assets/F1GP_LEADERBOARD_BUTTON.png", TEXTURE_BUTTON_LEADERBOARD);
-	Texture_Create("assets/F1GP_INFOR_BUTTON.png", TEXTURE_BUTTON_INFOR );				SDL_SetTextureAlphaMod( textures[TEXTURE_BUTTON_INFOR], 160 );
+	Texture_Create("assets/F1GP_INFOR_BUTTON.png", TEXTURE_BUTTON_INFOR );					SDL_SetTextureAlphaMod( textures[TEXTURE_BUTTON_INFOR], 160 );
 	Texture_Create("assets/Play_Button.png", TEXTURE_BUTTON_PLAY);
 	Texture_Create("assets/Quit_Button.png", TEXTURE_BUTTON_QUIT);
 	Texture_Create("assets/Back_Button.png", TEXTURE_BUTTON_BACK);
 	Texture_Create("assets/F1GP_HOME_Button.png", TEXTURE_BUTTON_HOME);
 	Texture_Create("assets/F1GP_Pause_Button.png", TEXTURE_BUTTON_PAUSE);
-	Texture_Create("assets/F1GP_Pause_OPTIONS.png", TEXTURE_BUTTON_PAUSE_OPTIONS);
+	Texture_Create("assets/F1GP_Pause_OPTIONS.png", TEXTURE_BUTTON_PAUSE_OPTIONS);			
 	Texture_Create("assets/F1GP_SOUND_OFF.png", TEXTURE_BUTTON_SOUND_OFF);
 	Texture_Create("assets/F1GP_SOUND_ON.png", TEXTURE_BUTTON_SOUND_ON);
-	Texture_Create("assets/F1GP_SOUND_OFF_1.png", TEXTURE_BUTTON_SOUND_OFF_1);			SDL_SetTextureAlphaMod( textures[TEXTURE_BUTTON_SOUND_OFF_1], 160 );
+	Texture_Create("assets/F1GP_SOUND_OFF_1.png", TEXTURE_BUTTON_SOUND_OFF_1);				SDL_SetTextureAlphaMod( textures[TEXTURE_BUTTON_SOUND_OFF_1], 160 );
 	Texture_Create("assets/F1GP_SOUND_ON_1.png", TEXTURE_BUTTON_SOUND_ON_1);				SDL_SetTextureAlphaMod( textures[TEXTURE_BUTTON_SOUND_ON_1], 160 );
 	Texture_Create("assets/F1GP_Resume_Button.png", TEXTURE_BUTTON_RESUME);
 	Texture_Create("assets/F1GP_Restart_Button.png", TEXTURE_BUTTON_RESTART);

@@ -5,6 +5,8 @@
 #include "Render.h"
 #include "Texture.h"
 #include "Init.h"
+#include "Music.h"
+#include "DataProcessing.h"
 #include <string.h>
 #include <string>
 
@@ -228,65 +230,33 @@ void F1GP_Show_Game_Over_Screen() {
 
 void F1GP_Render_Separator() {
 	int start_y, end_y;
-
 	SDL_Rect rectangle;
-	SDL_SetRenderDrawColor(render, 250, 250, 250, 0);
-	rectangle.x = F1GP_SEPARATOR_0_START_X;
-	rectangle.y = F1GP_DISPLAY_START_Y;
-	rectangle.w = F1GP_SEPARATOR_0_END_X + 1 - rectangle.x;
-	rectangle.h = F1GP_DISPLAY_END_Y - rectangle.y;
-	SDL_RenderFillRect(render, &rectangle);
 
-	SDL_SetRenderDrawColor(render, 250, 250, 250, 0);
-	rectangle.x = F1GP_SEPARATOR_1_START_X;
-	rectangle.y = F1GP_DISPLAY_START_Y;
-	rectangle.w = F1GP_SEPARATOR_1_END_X + 1 - rectangle.x;
-	rectangle.h = F1GP_DISPLAY_END_Y - rectangle.y;
-	SDL_RenderFillRect(render, &rectangle);
-
-	start_y = F1GP_separator_0_block_start_y;
-	end_y = start_y + F1GP_SEPARATOR_HEIGHT_SPACE;
+	start_y = F1GP_separator_0_block_start_y - 2 * (F1GP_SEPARATOR_HEIGHT - F1GP_SEPARATOR_HEIGHT_SPACE);
+	end_y = start_y + F1GP_SEPARATOR_HEIGHT;
 	while (true) {
 		SDL_SetRenderDrawColor(render, 150, 150, 150, 0);
 		rectangle.x = F1GP_SEPARATOR_0_START_X;
 		rectangle.y = start_y;
 		rectangle.w = F1GP_SEPARATOR_0_END_X + 1 - rectangle.x;
-		rectangle.h = end_y - rectangle.y;
+		rectangle.h = F1GP_SEPARATOR_HEIGHT;
 		SDL_RenderFillRect(render, &rectangle);
 
-		start_y += F1GP_SEPARATOR_HEIGHT;
-		end_y = start_y + F1GP_SEPARATOR_HEIGHT_SPACE;
-		if (start_y > F1GP_DISPLAY_END_Y)
-			break;
-		if (end_y > F1GP_DISPLAY_END_Y)
-			end_y = F1GP_DISPLAY_END_Y;
-	}
- 	F1GP_separator_0_block_start_y += F1GP_SEPARATOR_HEIGHT_SPACE;
-	if ( F1GP_separator_0_block_start_y  >=
-		( F1GP_DISPLAY_START_Y + F1GP_SEPARATOR_HEIGHT_SPACE * F1GP_SEPARATOR_RATIO ) )
-	 	F1GP_separator_0_block_start_y = F1GP_DISPLAY_START_Y;
-
-	start_y = F1GP_separator_1_block_start_y;
-	end_y = start_y + F1GP_SEPARATOR_HEIGHT_SPACE;
-	while (true) {
 		SDL_SetRenderDrawColor(render, 150, 150, 150, 0);
 		rectangle.x = F1GP_SEPARATOR_1_START_X;
-		rectangle.y = start_y;
-		rectangle.w = F1GP_SEPARATOR_1_END_X + 1 - rectangle.x;
-		rectangle.h = end_y - rectangle.y;
+		rectangle.y = start_y + F1GP_SEPARATOR_HEIGHT_SPACE;
 		SDL_RenderFillRect(render, &rectangle);
 
-		start_y += F1GP_SEPARATOR_HEIGHT;
-		end_y = start_y + F1GP_SEPARATOR_HEIGHT_SPACE;
+		start_y = end_y + F1GP_SEPARATOR_HEIGHT_SPACE;
+		end_y = start_y + F1GP_SEPARATOR_HEIGHT;
 		if (start_y > F1GP_DISPLAY_END_Y)
 			break;
 		if (end_y > F1GP_DISPLAY_END_Y)
 			end_y = F1GP_DISPLAY_END_Y;
 	}
- 	F1GP_separator_1_block_start_y += F1GP_SEPARATOR_HEIGHT_SPACE;
-	if (F1GP_separator_1_block_start_y >=
-		 ( F1GP_DISPLAY_START_Y + F1GP_SEPARATOR_HEIGHT_SPACE * F1GP_SEPARATOR_RATIO ) )
-	 	F1GP_separator_1_block_start_y = F1GP_DISPLAY_START_Y;
+ 	F1GP_separator_0_block_start_y += F1GP_SEPARATOR_HEIGHT_SPACE * 3;
+	if ( F1GP_separator_0_block_start_y  >= ( F1GP_DISPLAY_START_Y + F1GP_SEPARATOR_HEIGHT_SPACE + F1GP_SEPARATOR_HEIGHT) )
+	 	F1GP_separator_0_block_start_y = F1GP_DISPLAY_START_Y;
 }
 
 void F1GP_Render_Score(int x_pos, int y_pos) {
@@ -368,7 +338,7 @@ void F1GP_Render_Player_Car() {
 			Texture_Draw ( F1GP_player_car.pos_x - 92, F1GP_player_car.pos_y - 18, TEXTURE_PLAYER_CAR_TRANSFORM, 4, &src );		
 		}
 		else{ 
-			F1GP_run_count = 0;
+			F1GP_run_count = -1;
 			F1GP_player_is_car_transform = false;
 			Mix_Resume( BGM_channel );
 		}
@@ -403,8 +373,7 @@ void F1GP_Render_Player_Car() {
 }
 
 void F1GP_Render_Opposite_Car() {
-	int index;
-	for (index = 0; index < F1GP_OPPOSITE_CAR_COUNT + 1; index++) {
+	for (int index = 0; index < F1GP_OPPOSITE_CAR_COUNT + 1; index++) {
 		if ( !F1GP_opposite_car[index].is_empty )
 			Texture_Draw ( F1GP_opposite_car[index].pos_x, F1GP_opposite_car[index].pos_y, F1GP_opposite_car[index].image );
 	}

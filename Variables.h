@@ -7,6 +7,7 @@ Mix_Chunk *music_tracks[MUSIC_MAX] = { NULL };
 int BGM_channel = -1;
 SDL_Texture *textures[TEXTURE_MAX] = { NULL };
 
+bool remained = false;
 bool show_infor = false;
 bool show_leader_board = false;
 bool is_sound_on = true;

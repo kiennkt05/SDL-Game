@@ -86,7 +86,7 @@ void F1GP_Init() {
 	F1GP_pass = 0;
 	F1GP_fly_count = 1;
 	F1GP_fly_charger_count = 0;
-	F1GP_transform_count = 2;
+	F1GP_transform_count = 0;
 	F1GP_run_count = 0;
 
 	F1GP_explosive_effect.clear();

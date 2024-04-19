@@ -253,10 +253,6 @@ void F1GP_Framemove() {
 	int max;
 	int index;
 
-	//Flying processing
- 	F1GP_player_car_fly_duration++;
-	if (F1GP_player_car_fly_duration == F1GP_PLAYER_CAR_FLY_FRAME_COUNT) F1GP_player_is_car_fly = false;
-
 	shift = F1GP_PLAYER_CAR_SHIFT;
 	if (F1GP_key_up_pressed) {
 		//If the player car reach the upper bound
@@ -308,6 +304,8 @@ void F1GP_Framemove() {
 
 	//If the player car is flying
 	if ( F1GP_player_is_car_fly ) {
+		F1GP_player_car_fly_duration++;
+		if (F1GP_player_car_fly_duration == F1GP_PLAYER_CAR_FLY_FRAME_COUNT) F1GP_player_is_car_fly = false;
 		shift = F1GP_PLAYER_CAR_FLY_SHIFT;
 		if ( (F1GP_player_car.pos_y - shift) < F1GP_DISPLAY_START_Y)
 			shift = F1GP_player_car.pos_y - F1GP_DISPLAY_START_Y - 1;

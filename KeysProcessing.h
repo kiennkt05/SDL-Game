@@ -102,7 +102,7 @@ void F1GP_Keyboard_Key_Handler(int vkey_code, int key_state) {
 	}
 }
 
-void F1GP_Handle_Key_Press(SDL_Event& event, string &s) {
+void F1GP_Handle_Key_Press(SDL_Event& event, std::string &s) {
 	if ( s == "Enter your name" ) s = "";
 	switch(event.key.keysym.sym) {
 		case SDLK_RETURN:
