@@ -2,11 +2,22 @@
 #define LOGIC_H
 
 #include "CommonHeaders.h"
-#include "Logic.h"
 #include "Music.h"
 
 bool cmp( std::pair<std::string, int> p1, std::pair<std::string, int> p2 ){
 	return (p1.second > p2.second);
+}
+
+
+bool Mouse_In_Button( int x, int y, int w, int h ){
+	int m_x, m_y;
+	SDL_GetMouseState( &m_x, &m_y );
+	if( m_x < x + 5 || m_x > ( x + w - 5) 
+	 || m_y < y + 5 || m_y > ( y + h - 5 ) )
+	{
+		return false;
+	}
+	return true;
 }
 
 void F1GP_Crashing() {

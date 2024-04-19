@@ -9,17 +9,6 @@ void Set_Texture_Alpha_Mode(TEXTURE texture_id, int a){
 	SDL_SetTextureAlphaMod(textures[texture_id], a);
 }
 
-bool Mouse_In_Button( int x, int y, int w, int h ){
-	int m_x, m_y;
-	SDL_GetMouseState( &m_x, &m_y );
-	if( m_x < x + 5 || m_x > ( x + w - 5) 
-	 || m_y < y + 5 || m_y > ( y + h - 5 ) )
-	{
-		return false;
-	}
-	return true;
-}
-
 void Texture_Create(const char *filepath, TEXTURE texture_id) {
 	SDL_Surface *image = IMG_Load(filepath);
 	textures[texture_id] = SDL_CreateTextureFromSurface(render, image);

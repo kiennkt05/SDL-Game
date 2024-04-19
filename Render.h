@@ -7,8 +7,7 @@
 #include "Init.h"
 #include "Music.h"
 #include "DataProcessing.h"
-#include <string.h>
-#include <string>
+#include "Logic.h"
 
 void F1GP_Render_Leaderboard(){
 	Texture_Draw( 50, 50, TEXTURE_GAME_LEADERBOARD );

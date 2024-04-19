@@ -60,14 +60,11 @@
 #define F1GP_STATUS_END_X                            (480)
 #define F1GP_STATUS_WIDTH                            (F1GP_STATUS_END_X - F1GP_STATUS_START_X)
 #define F1GP_STATUS_HEIGHT                           (27)
-
-// 14/03
 #define F1GP_EXPLOSIVE_EFFECT_FRAME                  (10)
 #define F1GP_EXPLOSIVE_EFFECT_FRAME_WIDTH            (128)
 #define F1GP_EXPLOSIVE_EFFECT_FRAME_HEIGHT           (80)
 #define F1GP_EXPLOSIVE_EFFECT_INCREMENT              (15)
 #define F1GP_TRANSFORM_FRAME                         (80)
-
 #define F1GP_BUTTON_BACK_WIDTH                       (103)
 #define F1GP_BUTTON_BACK_HEIGHT                      (27)
 #define F1GP_BUTTON_LEADERBOARD_WIDTH                (221)

@@ -92,8 +92,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/F1GrandPrix",
-      "program": "d:/F1GrandPrix/build/Debug/outDebug",
+      "cwd": "d:/SDL-Game",
+      "program": "d:/SDL-Game/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
