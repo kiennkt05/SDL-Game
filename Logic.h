@@ -42,29 +42,17 @@ void F1GP_New_Opposite_Car() {
 
 	
 	no_slot = true;
-	if ((rand() % F1GP_OPPOSITE_CAR_DEFAULT_APPEAR_RATE) == 0) {
-		for (index = 0; index < F1GP_OPPOSITE_CAR_COUNT + 1; index++) {
-			// Search for the opposite car not initialized in opposite car list
-			if ( F1GP_opposite_car[index].is_empty == true ) { 			
-				validIndex = index;
-				no_slot = false;
-				break;
-			}
+	for (index = 0; index < F1GP_OPPOSITE_CAR_COUNT + 1; index++) {
+		if ( F1GP_opposite_car[index].is_empty == true ) { 			
+			validIndex = index;
+			no_slot = false;
+			break;
 		}
 	}
 
 	// If there all the list was initialized, then return
 	if ( no_slot )
 		return;
-
-	// Rand for random road
-	road = rand() % 3;
-
-	// Check for avoid overlapping car
-	if ( road == F1GP_last_car_road ) {
-		road++;
-		road %= 3;
-	}
 
 	// Rand for opposite car
 	if ( F1GP_level < 3) {
@@ -95,9 +83,28 @@ void F1GP_New_Opposite_Car() {
 	
 	// Check for available space for player car
 	enough_space = true;
+	road = rand()%3;
 	for ( index = 0; index < F1GP_OPPOSITE_CAR_COUNT + 1; index++ ) {
-		if ( ( F1GP_opposite_car[index].is_empty == false) && ( F1GP_opposite_car[index].pos_y <  ( F1GP_player_car.dy * 2 / 2 ) ) )
-			enough_space = false;
+		if ( ( F1GP_opposite_car[index].is_empty == false) ){
+			if ( road == F1GP_last_car_road ) {
+				road++;
+				road %= 3;
+			}
+			if ( (F1GP_opposite_car[index].pos_x - F1GP_ROAD_0_START_X) / F1GP_ROAD_WIDTH == road ){
+				// Distance between two cars
+				int d1 = F1GP_opposite_car[index].pos_y - F1GP_DISPLAY_START_Y;
+				// Distance from the available car to the end of the display
+				int d2 = F1GP_DISPLAY_END_Y - F1GP_opposite_car[index].pos_y;
+				if ( 1.0 * d1 / F1GP_opposite_car_type[car_type].speed < 1.0 * d2 / F1GP_opposite_car[index].speed ){
+					enough_space = false;
+					break;
+				}
+			}
+			else if ( F1GP_opposite_car[index].pos_y <  ( F1GP_player_car.dy ) ){
+				enough_space = false;
+				break;
+			}
+		}		
 	}
 	
 	if ( !enough_space )
