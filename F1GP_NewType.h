@@ -112,10 +112,4 @@ struct F1GP_OPPOSITE_CAR{
 	bool is_special_box;
 };
 
-#ifdef __EMSCRIPTEN__
-typedef struct {
-	SDL_Texture *texture;
-} CONTEXT_EMSCRIPTEN;
-#endif
-
 #endif
