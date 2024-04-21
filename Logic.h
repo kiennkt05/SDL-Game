@@ -12,8 +12,7 @@ bool cmp( std::pair<std::string, int> p1, std::pair<std::string, int> p2 ){
 bool Mouse_In_Button( int x, int y, int w, int h ){
 	int m_x, m_y;
 	SDL_GetMouseState( &m_x, &m_y );
-	if( m_x < x + 5 || m_x > ( x + w - 5) 
-	 || m_y < y + 5 || m_y > ( y + h - 5 ) )
+	if( m_x <= x || m_x >= ( x + w ) || m_y <= y || m_y >= ( y + h ) )
 	{
 		return false;
 	}

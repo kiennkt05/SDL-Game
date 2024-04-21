@@ -79,17 +79,56 @@ int main(int argc, char *argv[]) {
 						break;
 					
 					case SDL_MOUSEBUTTONDOWN:
+						int x, y;
+						SDL_GetMouseState(&x, &y);
 						if ( show_infor || show_leader_board ){
-							int x, y; 
-							SDL_GetMouseState( &x, &y );
 							if ( x < 50 || x > 450 || y < 50 || y > 450 ){
 								Music_Play( MUSIC_BUTTON_CLICKED, 0 );
 								if ( show_infor ) show_infor = false;
 								if ( show_leader_board ) show_leader_board = false;
 							}
 						}
-						else
-							F1GP_Render_Button( event );
+						else{
+							// Sound button clicked
+							if (x >= 416 && x <= 416 + 30 && y >= 15 && y <= 15 + 30){
+								Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+								if ( is_sound_on ){
+									Mix_MasterVolume( 0 );
+								}
+								else {
+									Mix_MasterVolume( 128 );
+								}
+								is_sound_on = !is_sound_on;
+							}
+
+							// Infor button clicked
+							else if (x >= 458 && x <= 458 + 30 && y >= 15 && y <= 15 + 30){
+								Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+								show_infor = true;								
+							}
+
+							// Leaderboard button cliked
+							else if (x >= F1GP_BUTTON_LEADERBOARD_X && x <= F1GP_BUTTON_LEADERBOARD_X + F1GP_BUTTON_LEADERBOARD_WIDTH && 
+								y >= F1GP_BUTTON_LEADERBOARD_Y && y <= F1GP_BUTTON_LEADERBOARD_Y + F1GP_BUTTON_LEADERBOARD_HEIGHT){
+								Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+								show_leader_board = true;
+							}
+
+							// Play button clicked
+							else if (x >= F1GP_BUTTON_PLAY_X && x <= F1GP_BUTTON_PLAY_X + F1GP_BUTTON_PLAY_WIDTH && 
+								y >= F1GP_BUTTON_PLAY_Y && y <= F1GP_BUTTON_PLAY_Y + F1GP_BUTTON_PLAY_HEIGHT){
+								Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+								exit_main_loop = false;
+							}				
+
+							// Quit button clicked
+							else if (x >= F1GP_BUTTON_QUIT_X && x <= F1GP_BUTTON_QUIT_X + F1GP_BUTTON_QUIT_WIDTH && 
+								y >= F1GP_BUTTON_QUIT_Y && y <= F1GP_BUTTON_QUIT_Y + F1GP_BUTTON_QUIT_HEIGHT){
+								Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+								quit = true;
+							}			
+
+						}
 						break;
 					case SDL_KEYDOWN:
 						if ( event.key.keysym.sym == SDLK_m ){
@@ -145,8 +184,54 @@ int main(int argc, char *argv[]) {
 							F1GP_Keyboard_Key_Handler(event.key.keysym.sym, false);
 							break;
 						case SDL_MOUSEBUTTONDOWN:
-							if ( !F1GP_is_crashing ) 
-								F1GP_Render_Button( event );
+							if (!F1GP_is_crashing){
+								int x, y;
+								SDL_GetMouseState(&x, &y);
+								if (!F1GP_is_game_paused){
+									// Pause button clicked
+									if (x >= 458 && x <= 458 + 30 && y >= 15 && y <= 15 + 30){
+										Mix_Pause(-1);
+										Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+										F1GP_is_game_paused = true;
+									}
+
+									// Sound button clicked
+									else if (x >= 416 && x <= 416 + 30 && y >= 15 && y <= 15 + 30){
+										Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+										if ( is_sound_on ){
+											Mix_MasterVolume( 0 );
+										}
+										else {
+											Mix_MasterVolume( 128 );
+										}
+										is_sound_on = !is_sound_on;
+									}
+								}
+								else {
+									// Resume button cliked
+									if (x >= 110 && x <= 110 + 30 && y >= 80 && y <= 80 + 30){
+										Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+										Mix_Resume(-1);
+										F1GP_is_game_paused = false;										
+									}
+									
+									// Restart butotn cliked
+									else if (x >= 168 && x <= 168 + 30 && y >= 80 && y <= 80 + 30){
+										Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+										Mix_PlayChannel(BGM_channel, music_tracks[MUSIC_BACKGROUND], -1 );
+										F1GP_is_game_paused = false;
+										F1GP_Init();										
+									}									
+									
+									// Home button clicked
+									else if (x >= 226 && x <= 226 + 30 && y >= 80 && y <= 80 + 30){
+										F1GP_is_game_paused = false;
+										Mix_HaltChannel(-1);
+										Music_Play( MUSIC_BUTTON_CLICKED, 0 );
+										F1GP_Update_History();
+										exit_main_loop = true;										
+									}								}
+							}
 							break;
 					}
 				}

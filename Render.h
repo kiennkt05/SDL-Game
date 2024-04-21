@@ -77,32 +77,18 @@ void F1GP_Render_Intro(){
 }
 
 void F1GP_Render_Button( SDL_Event evt ){
+	// In game button
 	if ( !exit_main_loop && !F1GP_is_game_paused ){
 		int p_times = 4, s_times = 4;
 		
-		// Handle Pause Button
+		// Handle Pause Button's size
 		if ( Mouse_In_Button( 458, 15, 30, 30 ) ){
 			p_times = 5;
-			if ( evt.button.button == SDL_BUTTON_LEFT ){
-				Mix_Pause(-1);
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				F1GP_is_game_paused = true;
-			}
 		}
 
-		// Handle Sound Button
-		if ( Mouse_In_Button( 416, 15, 30, 30 ) ){
+		// Handle Sound Button's size
+		else if ( Mouse_In_Button( 416, 15, 30, 30 ) ){
 			s_times = 5;
-			if ( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				if ( is_sound_on ){
-					Mix_MasterVolume( 0 );
-				}
-				else {
-					Mix_MasterVolume( 128 );
-				}
-				is_sound_on = !is_sound_on;
-			}
 		}
 
 		// Render Button Texture
@@ -111,36 +97,20 @@ void F1GP_Render_Button( SDL_Event evt ){
 		else Texture_Draw( 416, 15, TEXTURE_BUTTON_SOUND_OFF, s_times );
 
 	}
+	
+	// In paused button
 	else if ( !exit_main_loop && F1GP_is_game_paused ){
 		Texture_Draw( 81, 50, TEXTURE_BUTTON_PAUSE_OPTIONS );
 
 		int resu_times = 4, rest_times = 4, h_times = 4;
 		if ( Mouse_In_Button( 110, 80, 30, 30 ) ){
 			resu_times = 5;
-			if ( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				Mix_Resume(-1);
-				F1GP_is_game_paused = false;
-			}
 		}
-		if ( Mouse_In_Button( 168, 80, 30, 30 ) ){
+		else if ( Mouse_In_Button( 168, 80, 30, 30 ) ){
 			rest_times = 5;
-			if ( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				Mix_PlayChannel(BGM_channel, music_tracks[MUSIC_BACKGROUND], -1 );
-				F1GP_is_game_paused = false;
-				F1GP_Init();
-			}
 		}
-		if ( Mouse_In_Button( 226, 80, 30, 30 ) ){
+		else if ( Mouse_In_Button( 226, 80, 30, 30 ) ){
 			h_times = 5;
-			if ( evt.button.button == SDL_BUTTON_LEFT ){
-				F1GP_is_game_paused = false;
-				Mix_HaltChannel(-1);
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				F1GP_Update_History();
-				exit_main_loop = true;
-			}
 		}
 
 		Texture_Draw( 110, 80, TEXTURE_BUTTON_RESUME, resu_times );
@@ -148,64 +118,42 @@ void F1GP_Render_Button( SDL_Event evt ){
 		Texture_Draw( 226, 80, TEXTURE_BUTTON_HOME, h_times );
 
 	}
+	
+	// Menu's button
 	else if ( !show_infor && !show_leader_board ){
 		int l_times = 4, p_times = 4, q_times = 4, i_times = 4, s_times = 4;
 
-		// Handle Sound Button
+		// Handle Sound Button's size
 		if ( Mouse_In_Button( 416, 15, 30, 30 ) ){
 			s_times = 5;
-			if ( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				if ( is_sound_on ){
-					Mix_MasterVolume( 0 );
-				}
-				else {
-					Mix_MasterVolume( 128 );
-				}
-				is_sound_on = !is_sound_on;
-			}
 		}
 
-		// Handle Infor Button
-		if( Mouse_In_Button( 458, 15, 30, 30 ) ){
+		// Handle Infor Button's size
+		else if( Mouse_In_Button( 458, 15, 30, 30 ) ){
 			i_times = 5;
-			if( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				show_infor = true;
-			}
 		}
 		
-		// Handle Leaderboard Button
-		if( Mouse_In_Button( F1GP_BUTTON_LEADERBOARD_X, F1GP_BUTTON_LEADERBOARD_Y, F1GP_BUTTON_LEADERBOARD_WIDTH, F1GP_BUTTON_LEADERBOARD_HEIGHT ) ) {
+		// Handle Leaderboard Button's size
+		else if( Mouse_In_Button( F1GP_BUTTON_LEADERBOARD_X, F1GP_BUTTON_LEADERBOARD_Y, F1GP_BUTTON_LEADERBOARD_WIDTH, F1GP_BUTTON_LEADERBOARD_HEIGHT ) ) {
 			l_times = 5;
-			if( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				show_leader_board = true;
-			}
 		}
 
-		// Handle Play Button
-		if( Mouse_In_Button( F1GP_BUTTON_PLAY_X, F1GP_BUTTON_PLAY_Y, F1GP_BUTTON_PLAY_WIDTH, F1GP_BUTTON_PLAY_HEIGHT ) ) {
+		// Handle Play Button's size
+		else if( Mouse_In_Button( F1GP_BUTTON_PLAY_X, F1GP_BUTTON_PLAY_Y, F1GP_BUTTON_PLAY_WIDTH, F1GP_BUTTON_PLAY_HEIGHT ) ) {
 			p_times = 5;
-			if( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				exit_main_loop = false;
-			}
 		}
 
-		// Handle Quit Button
-		if( Mouse_In_Button( F1GP_BUTTON_QUIT_X, F1GP_BUTTON_QUIT_Y, F1GP_BUTTON_QUIT_WIDTH, F1GP_BUTTON_QUIT_HEIGHT ) )
+		// Handle Quit Button's size
+		else if( Mouse_In_Button( F1GP_BUTTON_QUIT_X, F1GP_BUTTON_QUIT_Y, F1GP_BUTTON_QUIT_WIDTH, F1GP_BUTTON_QUIT_HEIGHT ) )
 		{
 			q_times = 5;
-			if( evt.button.button == SDL_BUTTON_LEFT ){
-				Music_Play( MUSIC_BUTTON_CLICKED, 0 );
-				quit = true;
-			}
 		}
 
 		// Render Button Texture
-		if ( is_sound_on ) Texture_Draw( 416, 15, TEXTURE_BUTTON_SOUND_ON_1, s_times );
-		else Texture_Draw( 416, 15, TEXTURE_BUTTON_SOUND_OFF_1, s_times );		
+		if ( is_sound_on ) 
+			Texture_Draw( 416, 15, TEXTURE_BUTTON_SOUND_ON_1, s_times );
+		else 
+			Texture_Draw( 416, 15, TEXTURE_BUTTON_SOUND_OFF_1, s_times );		
 		Texture_Draw( 458, 15, TEXTURE_BUTTON_INFOR, i_times );
 		Texture_Draw( F1GP_BUTTON_LEADERBOARD_X, F1GP_BUTTON_LEADERBOARD_Y, TEXTURE_BUTTON_LEADERBOARD, l_times );
 		Texture_Draw( F1GP_BUTTON_PLAY_X, F1GP_BUTTON_PLAY_Y, TEXTURE_BUTTON_PLAY, p_times );
